@@ -22,6 +22,7 @@ pub mod v0 {
                 position: Some(transform.position),
                 orientation: Some(transform.orientation),
                 velocity: Some(transform.velocity),
+                player_name: Some(transform.player_name),
             }
         }
     }

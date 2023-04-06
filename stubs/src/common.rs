@@ -12,12 +12,14 @@ pub mod v0 {
         pub right: Option<Vector>,
         pub up: Option<Vector>,
         pub velocity: Option<Vector>,
+        pub player_name: Option<String>,
     }
 
     pub(crate) struct Transform {
         pub position: Position,
         pub orientation: Orientation,
         pub velocity: Velocity,
+        pub player_name: String,
     }
 
     impl From<RawTransform> for Transform {
@@ -29,6 +31,7 @@ pub mod v0 {
                 right,
                 up,
                 velocity,
+                player_name,
             } = raw;
             let position = position.unwrap_or_default();
             let position_north = position_north.unwrap_or_default();
@@ -36,6 +39,7 @@ pub mod v0 {
             let right = right.unwrap_or_default();
             let up = up.unwrap_or_default();
             let velocity = velocity.unwrap_or_default();
+            let player_name = player_name.unwrap_or_default();
 
             let projection_error =
                 (position_north.z - position.u).atan2(position_north.x - position.v);
@@ -75,6 +79,7 @@ pub mod v0 {
                 position,
                 orientation,
                 velocity,
+                player_name,
             }
         }
     }
@@ -87,7 +92,6 @@ pub mod v0 {
         callsign: String,
         coalition: i32,
         r#type: String,
-        player_name: Option<String>,
         group: Option<Group>,
         number_in_group: u32,
         raw_transform: Option<RawTransform>,
@@ -101,7 +105,6 @@ pub mod v0 {
                 callsign,
                 coalition,
                 r#type,
-                player_name,
                 group,
                 number_in_group,
                 raw_transform,
@@ -113,10 +116,10 @@ pub mod v0 {
                 callsign,
                 coalition,
                 r#type,
+                player_name: Some(transform.player_name),
                 position: Some(transform.position),
                 orientation: Some(transform.orientation),
                 velocity: Some(transform.velocity),
-                player_name,
                 group,
                 number_in_group,
             }

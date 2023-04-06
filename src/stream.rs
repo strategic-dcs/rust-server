@@ -307,6 +307,7 @@ impl UnitState {
             position,
             orientation,
             velocity,
+            player_name,
         } = res.into_inner();
 
         self.update_time = time;
@@ -325,6 +326,12 @@ impl UnitState {
         }
         if let Some((before, after)) = self.unit.velocity.as_mut().zip(velocity) {
             if !velocity_equalish(before, &after) {
+                *before = after;
+                changed = true;
+            }
+        }
+        if let Some((before, after)) = self.unit.player_name.as_mut().zip(player_name) {
+            if !after.eq(&*before) {
                 *before = after;
                 changed = true;
             }
