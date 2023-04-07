@@ -164,6 +164,10 @@ GRPC.methods.addStaticObject = function(params)
     staticTemplate.rate = params.score
   end
 
+  if params.shapeName ~= nil then
+    staticTemplate.shape_name = params.shapeName
+  end
+
   if params.cargoMass > 0 then
     staticTemplate.canCargo = true
     staticTemplate.mass = params.cargoMass
@@ -213,6 +217,10 @@ GRPC.methods.addLinkedStatic = function(params)
 
   if params.score ~= nil then
     staticTemplate.rate = params.score
+  end
+
+  if params.shape_name ~= nil then
+    staticTemplate.shape_name = params.shape_name
   end
 
   coalition.addStaticObject(params.country - 1, staticTemplate)

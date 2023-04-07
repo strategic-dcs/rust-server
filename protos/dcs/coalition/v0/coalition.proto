@@ -163,6 +163,8 @@ message AddStaticObjectRequest {
   dcs.common.v0.InputPosition position = 8;
   // cargo mass in kilograms
   uint32 cargo_mass = 9;
+  // shape_name is required on some static object creation requests
+  optional string shape_name = 10;
 }
 
 message AddStaticObjectResponse {
@@ -192,6 +194,8 @@ message AddLinkedStaticRequest {
   // y offset from linked unit center (positive is starboard-side;
   // negative is port-side)
   double y = 10;
+  // shape_name is required on some static object creation requests
+  optional string shape_name = 11;
 }
 
 message AddLinkedStaticResponse {
