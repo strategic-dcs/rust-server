@@ -32,12 +32,11 @@ local createGroundUnitsTemplate = function(unitListTemplate)
   local units = {}
 
   for _, unitTemplate in pairs(unitListTemplate) do
-    local pos = coord.LLtoLO(unitTemplate.position.lat, unitTemplate.position.lon)
     local unit = {
       name = unitTemplate.name,
       type = unitTemplate.type,
-      x = pos.x,
-      y = pos.z,
+      x = unitTemplate.position.lat,
+      y = unitTemplate.position.lon,
       transportable = { randomTransportable = false },
       skill = skill[unitTemplate.skill],
       heading = unitTemplate.heading,
@@ -50,16 +49,14 @@ local createGroundUnitsTemplate = function(unitListTemplate)
 end
 
 local createGroundGroupTemplate = function(groupTemplate)
-  local pos = coord.LLtoLO(groupTemplate.position.lat, groupTemplate.position.lon)
-
   local groupTable = {
     name = groupTemplate.name,
     route = {
       spans = {},
       points = {
         {
-          x = pos.x,
-          y = pos.z,
+          x = groupTemplate.position.lat,
+          y = groupTemplate.position.lon,
           type = "Turning Point",
           eta = 0,
           eta_locked = true,
@@ -82,8 +79,8 @@ local createGroundGroupTemplate = function(groupTemplate)
     uncontrollable = false,
     units = createGroundUnitsTemplate(groupTemplate.units),
     visible = false,
-    x = pos.x,
-    y = pos.z
+    x = groupTemplate.position.lat,
+    y = groupTemplate.position.lon
   }
 
   if groupTemplate.group_id ~= nil then
@@ -150,14 +147,13 @@ GRPC.methods.addStaticObject = function(params)
     return GRPC.errorInvalidArgument("provide position")
   end
 
-  local pos = coord.LLtoLO(params.position.lat, params.position.lon)
   local staticTemplate = {
     name = params.name,
     type = params.type,
     heading = math.rad(params.heading),
     dead = params.dead,
-    x = pos.x,
-    y = pos.z,
+    x = params.position.lat,
+    y = params.position.lon,
   }
 
   if params.score ~= nil then
