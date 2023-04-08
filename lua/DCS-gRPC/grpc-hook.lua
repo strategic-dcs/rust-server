@@ -55,7 +55,7 @@ function handler.onPlayerTrySendChat(playerID, msg)
     },
   })
 
-  return msg
+  -- We do not return here, to allow other handlers to decide
 end
 
 function handler.onPlayerTryConnect(addr, name, ucid, id)
