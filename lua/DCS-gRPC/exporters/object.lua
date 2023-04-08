@@ -17,6 +17,12 @@ GRPC.exporters.position = function(pos)
 end
 
 GRPC.exporters.unit = function(unit)
+
+  local group = unit:getGroup()
+  if group then
+    group = GRPC.exporters.group(group)
+  end
+
   return {
     id = tonumber(unit:getID()),
     name = unit:getName(),
@@ -24,7 +30,7 @@ GRPC.exporters.unit = function(unit)
     coalition = unit:getCoalition() + 1, -- Increment for non zero-indexed gRPC enum
     type = unit:getTypeName(),
     playerName = Unit.getPlayerName(unit),
-    group = GRPC.exporters.group(Unit.getGroup(unit)),
+    group = group,
     numberInGroup = unit:getNumber(),
     rawTransform = GRPC.exporters.rawTransform(unit),
   }
