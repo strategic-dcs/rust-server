@@ -150,7 +150,7 @@ GRPC.methods.addStaticObject = function(params)
   local staticTemplate = {
     name = params.name,
     type = params.type,
-    heading = math.rad(params.heading),
+    heading = params.heading,
     dead = params.dead,
     x = params.position.lat,
     y = params.position.lon,
@@ -207,7 +207,7 @@ GRPC.methods.addLinkedStatic = function(params)
     offsets = {
       x = params.x,
       y = params.y,
-      angle = math.rad(params.angle),
+      angle = params.angle,
     }
   }
 
