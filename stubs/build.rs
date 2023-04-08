@@ -16,12 +16,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "#[serde(from = \"UnitIntermediate\")]",
         )
         .type_attribute(
+            "dcs.common.v0.Static",
+            "#[serde(from = \"StaticIntermediate\")]",
+        )
+        .type_attribute(
             "dcs.common.v0.Weapon",
             "#[serde(from = \"WeaponIntermediate\")]",
         )
         .type_attribute(
             "dcs.unit.v0.GetTransformResponse",
             "#[serde(from = \"GetTransformResponseIntermediate\")]",
+        )
+        .type_attribute(
+            "dcs.unit.v0.GetStaticTransformResponse",
+            "#[serde(from = \"GetStaticTransformResponseIntermediate\")]",
         )
         .type_attribute(
             "dcs.mission.v0.StreamUnitsResponse.update",

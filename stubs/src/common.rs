@@ -128,6 +128,38 @@ pub mod v0 {
 
     #[derive(serde::Deserialize)]
     #[serde(rename_all = "camelCase")]
+    struct StaticIntermediate {
+        id: u32,
+        name: String,
+        coalition: i32,
+        r#type: String,
+        raw_transform: Option<RawTransform>,
+    }
+
+    impl From<StaticIntermediate> for Static {
+        fn from(i: StaticIntermediate) -> Self {
+            let StaticIntermediate {
+                id,
+                name,
+                coalition,
+                r#type,
+                raw_transform,
+            } = i;
+            let transform = Transform::from(raw_transform.unwrap_or_default());
+            Static {
+                id,
+                name,
+                coalition,
+                r#type,
+                position: Some(transform.position),
+                orientation: Some(transform.orientation),
+                velocity: Some(transform.velocity),
+            }
+        }
+    }
+
+    #[derive(serde::Deserialize)]
+    #[serde(rename_all = "camelCase")]
     struct WeaponIntermediate {
         id: u32,
         r#type: String,

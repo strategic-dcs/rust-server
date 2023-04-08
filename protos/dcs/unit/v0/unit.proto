@@ -29,8 +29,12 @@ service UnitService {
    */
   rpc GetTransform(GetTransformRequest) returns (GetTransformResponse) {}
 
+  rpc GetStaticTransform(GetStaticTransformRequest) returns (GetStaticTransformResponse) {}
+
   // https://wiki.hoggitworld.com/view/DCS_func_destroy
   rpc Destroy(DestroyRequest) returns (DestroyResponse) {}
+
+  rpc DestroyStatic(DestroyStaticRequest) returns (DestroyStaticResponse) {}
 }
 
 message GetRadarRequest {
@@ -64,6 +68,23 @@ message GetTransformResponse {
   // The velocity of the unit in both 2D and 3D space
   dcs.common.v0.Velocity velocity = 4;
   optional string player_name = 5;
+}
+
+message GetStaticTransformRequest {
+  string name = 1;
+}
+
+message GetStaticTransformResponse {
+  // Time in seconds since the scenario started.
+  double time = 1;
+  // The position of the static object
+  dcs.common.v0.Position position = 2;
+
+  // E.g. sling loaded cargo enroute
+  // The orientation of the static object in both 2D and 3D space
+  dcs.common.v0.Orientation orientation = 3;
+  // The velocity of the static in both 2D and 3D space
+  dcs.common.v0.Velocity velocity = 4;
 }
 
 message GetPlayerNameRequest {
@@ -104,4 +125,11 @@ message DestroyRequest {
 }
 
 message DestroyResponse {
+}
+
+message DestroyStaticRequest {
+  string name = 1;
+}
+
+message DestroyStaticResponse {
 }

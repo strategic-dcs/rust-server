@@ -62,11 +62,27 @@ impl UnitService for MissionRpc {
         Ok(Response::new(res))
     }
 
+    async fn get_static_transform(
+        &self,
+        request: Request<unit::v0::GetStaticTransformRequest>,
+    ) -> Result<Response<unit::v0::GetStaticTransformResponse>, Status> {
+        let res = self.request("getStaticTransform", request).await?;
+        Ok(Response::new(res))
+    }
+
     async fn destroy(
         &self,
         request: Request<unit::v0::DestroyRequest>,
     ) -> Result<Response<unit::v0::DestroyResponse>, Status> {
         let res = self.request("unitDestroy", request).await?;
+        Ok(Response::new(res))
+    }
+
+    async fn destroy_static(
+        &self,
+        request: Request<unit::v0::DestroyStaticRequest>,
+    ) -> Result<Response<unit::v0::DestroyStaticResponse>, Status> {
+        let res = self.request("staticDestroy", request).await?;
         Ok(Response::new(res))
     }
 }

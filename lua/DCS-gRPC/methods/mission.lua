@@ -18,8 +18,8 @@ local function exporter(object)
     return GRPC.exporters.static(object)
   elseif category == Object.Category.SCENERY then
     return GRPC.exporters.scenery(object)
-  elseif category == Object.Category.Cargo then
-    return GRPC.exporters.cargo(object)
+  elseif category == Object.Category.CARGO then
+    return GRPC.exporters.static(object)
   else
     GRPC.logWarning(
       "Could not determine object category of object with ID: " .. object:getID()
@@ -47,8 +47,8 @@ local function typed_exporter(object)
     grpcTable.static = exporter(object)
   elseif category == Object.Category.SCENERY then
     grpcTable.scenery = exporter(object)
-  elseif category == Object.Category.Cargo then
-    grpcTable.cargo = exporter(object)
+  elseif category == Object.Category.CARGO then
+    grpcTable.static = exporter(object)
   else
     GRPC.logWarning(
       "Could not determine object category of object with ID: " .. object:getID()

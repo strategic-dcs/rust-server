@@ -26,4 +26,27 @@ pub mod v0 {
             }
         }
     }
+
+    #[derive(serde::Deserialize)]
+    #[serde(rename_all = "camelCase")]
+    struct GetStaticTransformResponseIntermediate {
+        time: f64,
+        raw_transform: Option<RawTransform>,
+    }
+
+    impl From<GetStaticTransformResponseIntermediate> for GetStaticTransformResponse {
+        fn from(i: GetStaticTransformResponseIntermediate) -> Self {
+            let GetStaticTransformResponseIntermediate {
+                time,
+                raw_transform,
+            } = i;
+            let transform = Transform::from(raw_transform.unwrap_or_default());
+            GetStaticTransformResponse {
+                time,
+                position: Some(transform.position),
+                orientation: Some(transform.orientation),
+                velocity: Some(transform.velocity),
+            }
+        }
+    }
 }

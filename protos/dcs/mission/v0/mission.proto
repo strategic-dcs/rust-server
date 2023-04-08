@@ -548,6 +548,9 @@ message StreamUnitsRequest {
   // with the appropriate polling rates. `GROUP_CATEGORY_UNSPECIFIED` would
   // return all the units.
   dcs.common.v0.GroupCategory category = 3;
+
+  // Also include static objects in the results, they are units afterall
+  optional bool include_static_objects = 4;
 }
 
 message StreamUnitsResponse {
@@ -562,8 +565,11 @@ message StreamUnitsResponse {
     // The unit is either new or its position or attitude changed.
     dcs.common.v0.Unit unit = 2;
 
-    // The unit does not exist anymore.
-    UnitGone gone = 3;
+    // The static object is either new or its position or attitude changed.
+    dcs.common.v0.Static static = 3;
+
+    // The unit, or static object does not exist anymore.
+    UnitGone gone = 4;
   }
 }
 

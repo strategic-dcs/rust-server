@@ -30,8 +30,8 @@ GRPC.methods.getRadar = function(params)
     grpcTable.airbase = GRPC.exporters.airbase(object)
   elseif(category == Object.Category.SCENERY) then
     grpcTable.scenery = GRPC.exporters.scenery(object)
-  elseif(category == Object.Category.Cargo) then
-    grpcTable.cargo = GRPC.exporters.cargo(object)
+  elseif(category == Object.Category.CARGO) then
+    grpcTable.static = GRPC.exporters.cargo(object)
   else
     GRPC.logWarning(
       "Could not determine object category of object with ID: " .. object:getID()
@@ -66,9 +66,32 @@ GRPC.methods.getUnitTransform = function(params)
     return GRPC.errorNotFound("unit does not exist")
   end
 
+  local xform = GRPC.exporters.rawTransform(unit)
+  xform.playerName = unit:getPlayerName()
+
   return GRPC.success({
     time = timer.getTime(),
-    rawTransform = GRPC.exporters.rawTransform(unit),
+    rawTransform = xform,
+  })
+end
+
+GRPC.methods.getStaticTransform = function(params)
+  -- https://wiki.hoggitworld.com/view/DCS_func_getByName
+  --
+  -- This is required as some statics do show up in GetUnit and if we use the
+  -- getUnitTransform which is basically teh same thing, then we error on
+  -- getPlayer, so, to avoid ambiguity, keep them separate
+
+  local object = StaticObject.getByName(params.name)
+  if object == nil then
+    return GRPC.errorNotFound("static object does not exist")
+  end
+
+  -- Bundle our player name
+
+  return GRPC.success({
+    time = timer.getTime(),
+    rawTransform = GRPC.exporters.rawTransform(object),
   })
 end
 
@@ -126,5 +149,15 @@ GRPC.methods.unitDestroy = function(params)
   end
 
   unit:destroy()
+  return GRPC.success({})
+end
+
+GRPC.methods.staticDestroy = function(params)
+  local static = StaticObject.getByName(params.name)
+  if static == nil then
+    return GRPC.errorNotFound("static `" .. tostring(params.name) .. "` does not exist")
+  end
+
+  static:destroy()
   return GRPC.success({})
 end

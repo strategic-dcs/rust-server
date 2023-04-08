@@ -297,6 +297,10 @@ message Static {
   Coalition coalition = 4;
   // The position of the static
   Position position = 5;
+  // The orientation of the unit in both 2D and 3D space
+  Orientation orientation = 6;
+  // The velocity of the unit in both 2D and 3D space
+  Velocity velocity = 7;
 }
 
 /**
