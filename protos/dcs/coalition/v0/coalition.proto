@@ -153,18 +153,28 @@ message AddStaticObjectRequest {
   // type of the static object (e.g. "Farm A", "AS32-31A")
   string type = 3;
   // string name of the livery for the aircraft
-  string livery = 4;
+  optional string livery = 4;
   // boolean for whether or not the object will appear as a wreck
-  bool dead = 5;
+  optional bool dead = 5;
   // number value for the "score" of the object when it is killed
   optional uint32 rate = 6;
 
   double heading = 7;
   dcs.common.v0.InputPosition position = 8;
   // cargo mass in kilograms
-  uint32 cargo_mass = 9;
+  optional uint32 cargo_mass = 9;
+
+  // Moving farps requires category to be defined
+  optional string category = 10;
+
   // shape_name is required on some static object creation requests
-  optional string shape_name = 10;
+  optional string shape_name = 11;
+
+  // Sometimes, we want to provide a unit_id for instance, moving a FARP
+  optional uint32 unit_id = 12;
+
+  // If the unit is hidden
+  optional bool hidden = 13;
 }
 
 message AddStaticObjectResponse {

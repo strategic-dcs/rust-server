@@ -151,20 +151,31 @@ GRPC.methods.addStaticObject = function(params)
     name = params.name,
     type = params.type,
     heading = params.heading,
-    dead = params.dead,
     x = params.position.lat,
     y = params.position.lon,
   }
 
+  if params.dead ~= nil then
+    staticTemplate.dead = params.dead
+  end
+
   if params.score ~= nil then
     staticTemplate.rate = params.score
+  end
+
+  if params.category ~= nil then
+    staticTemplate.category = params.category
   end
 
   if params.shapeName ~= nil then
     staticTemplate.shape_name = params.shapeName
   end
 
-  if params.cargoMass > 0 then
+  if params.unitId ~= nil then
+    staticTemplate.unitId = params.unitId
+  end
+
+  if params.cargoMass ~= nil and params.cargoMass > 0 then
     staticTemplate.canCargo = true
     staticTemplate.mass = params.cargoMass
   end
