@@ -49,6 +49,28 @@ local createGroundUnitsTemplate = function(unitListTemplate)
 end
 
 local createGroundGroupTemplate = function(groupTemplate)
+
+  local comboTasks = {}
+  local groupTaskId = 1
+
+  if groupTemplate.immortal == true then
+    table.insert(comboTasks, {
+      ["enabled"] = true,
+      ["auto"] = false,
+      ["id"] = "WrappedAction",
+      ["number"] = groupTaskId,
+      ["params"] = {
+        ["action"] = {
+          ["id"] = "SetImmortal",
+          ["params"] = {
+            ["value"] = true,
+          }
+        }
+      }
+    })
+    groupTaskId = groupTaskId + 1
+  end
+
   local groupTable = {
     name = groupTemplate.name,
     route = {
@@ -67,7 +89,7 @@ local createGroundGroupTemplate = function(groupTemplate)
           task = {
             id = "ComboTask",
             params = {
-                tasks = {}
+                tasks = comboTasks
             }
           }
         }

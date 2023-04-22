@@ -67,6 +67,7 @@ message AddGroupRequest {
     bool uncontrollable = 11;
     repeated GroundUnitTemplate units = 12;
     bool visible = 13;
+    optional bool immortal = 14;
   }
   message GroundUnitTemplate {
     string name = 1;
