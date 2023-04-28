@@ -68,6 +68,10 @@ message AddGroupRequest {
     repeated GroundUnitTemplate units = 12;
     bool visible = 13;
     optional bool immortal = 14;
+    optional bool hiddenOnMFD = 15;
+    optional bool hiddenOnPlanner = 16;
+    optional uint32 setFrequency = 17;
+    optional bool isEwr = 18;
   }
   message GroundUnitTemplate {
     string name = 1;

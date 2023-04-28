@@ -71,6 +71,38 @@ local createGroundGroupTemplate = function(groupTemplate)
     groupTaskId = groupTaskId + 1
   end
 
+  if groupTemplate.isEwr == true then
+    table.insert(comboTasks, {
+      ["enabled"] = true,
+      ["auto"] = false,
+      ["id"] = "EWR",
+      ["number"] = groupTaskId,
+      ["params"] = {
+      }
+    })
+    groupTaskId = groupTaskId + 1
+  end
+
+  if groupTemplate.setFrequency ~= nil then
+    table.insert(comboTasks, {
+      ["enabled"] = true,
+      ["auto"] = false,
+      ["id"] = "WrappedAction",
+      ["number"] = groupTaskId,
+      ["params"] = {
+        ["action"] = {
+          ["id"] = "SetFrequency",
+          ["params"] = {
+            ["power"] = 100,
+            ["modulation"] = 0,
+            ["frequency"] = groupTemplate.setFrequency,
+          }
+        }
+      }
+    })
+    groupTaskId = groupTaskId + 1
+  end
+
   local groupTable = {
     name = groupTemplate.name,
     route = {
@@ -105,6 +137,12 @@ local createGroundGroupTemplate = function(groupTemplate)
     y = groupTemplate.position.lon
   }
 
+  if groupTemplate.hiddenOnPlanner ~= nil then
+    groupTable['hiddenOnPlanner'] = groupTemplate.hiddenOnPlanner
+  end
+  if groupTemplate.hiddenOnMfd ~= nil then
+    groupTable['hiddenOnMFD'] = groupTemplate.hiddenOnMfd
+  end
   if groupTemplate.group_id ~= nil then
     groupTable['groupId'] = groupTemplate.group_id
   end

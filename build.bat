@@ -1,1 +1,1 @@
-cargo build --release && copy /Y target\release\dcs_grpc.dll "C:\Users\Martin\Saved Games\DCS.server\Mods\tech\DCS-gRPC\dcs_grpc.dll" && xcopy /SY lua\DCS-gRPC "C:\Users\Martin\Saved Games\DCS.server\Scripts\DCS-gRPC
+cargo build --release && copy /Y target\release\dcs_grpc.dll "C:\Users\Martin\Saved Games\DCS.server\Mods\tech\DCS-gRPC\dcs_grpc.dll" && xcopy /SY lua\DCS-gRPC "C:\Users\Martin\Saved Games\DCS.server\Scripts\DCS-gRPC"
