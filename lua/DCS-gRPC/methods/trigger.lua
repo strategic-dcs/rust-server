@@ -64,7 +64,7 @@ GRPC.methods.setUserFlag = function(params)
 end
 
 GRPC.methods.markToAll = function(params)
-  local point = coord.LLtoLO(params.position.lat, params.position.lon, params.position.alt)
+  local point = {x=params.position.lat, y=0, z=params.position.lon}
   local idx = getMarkId()
 
   trigger.action.markToAll(idx, params.text, point, params.readOnly, params.message)
@@ -75,7 +75,7 @@ GRPC.methods.markToAll = function(params)
 end
 
 GRPC.methods.markToCoalition = function(params)
-  local point = coord.LLtoLO(params.position.lat, params.position.lon, params.position.alt)
+  local point = {x=params.position.lat, y=0, z=params.position.lon}
   local idx = getMarkId()
 
   local coalition = params.coalition - 1 -- Decrement for non zero-indexed gRPC enum
@@ -87,7 +87,7 @@ GRPC.methods.markToCoalition = function(params)
 end
 
 GRPC.methods.markToGroup = function(params)
-  local point = coord.LLtoLO(params.position.lat, params.position.lon, params.position.alt)
+  local point = {x=params.position.lat, y=0, z=params.position.lon}
   local idx = getMarkId()
 
   trigger.action.markToGroup(idx, params.text, point, params.groupId, params.readOnly, params.message)
@@ -111,7 +111,7 @@ GRPC.methods.markupToAll = function(params)
    -- later and add all parameters after the points into it as well
   local packedParams = {}
   for _, value in ipairs(params.points) do
-    table.insert(packedParams, coord.LLtoLO(value.lat, value.lon, value.alt))
+    table.insert(packedParams, {x=params.position.lat, y=0, z=params.position.lon})
   end
 
   table.insert(packedParams, {
@@ -150,7 +150,7 @@ end
 
 
 GRPC.methods.explosion = function(params)
-  local point = coord.LLtoLO(params.position.lat, params.position.lon, params.position.alt)
+  local point = {x=params.position.lat, y=0, z=params.position.lon}
 
   trigger.action.explosion(point, params.power)
 
@@ -163,7 +163,7 @@ GRPC.methods.smoke = function(params)
   if params.color == 0 then
     return GRPC.errorInvalidArgument("color cannot be unspecified (0)")
   end
-  local point = coord.LLtoLO(params.position.lat, params.position.lon, 0)
+  local point = {x=params.position.lat, y=0, z=params.position.lon}
   local groundPoint = {
     x = point.x,
     y = land.getHeight({x = point.x, y = point.z}),
@@ -176,7 +176,7 @@ GRPC.methods.smoke = function(params)
 end
 
 GRPC.methods.illuminationBomb = function(params)
-  local point = coord.LLtoLO(params.position.lat, params.position.lon, 0)
+  local point = {x=params.position.lat, y=0, z=params.position.lon}
   local groundOffsetPoint = {
     x = point.x,
     y = land.getHeight({x = point.x, y = point.z}) + params.position.alt,
@@ -194,7 +194,7 @@ GRPC.methods.signalFlare = function(params)
   if params.color == 0 then
     return GRPC.errorInvalidArgument("color cannot be unspecified (0)")
   end
-  local point = coord.LLtoLO(params.position.lat, params.position.lon, 0)
+  local point = {x=params.position.lat, y=0, z=params.position.lon}
   local groundPoint = {
     x = point.x,
     y = land.getHeight({x = point.x, y = point.z}),
