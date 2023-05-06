@@ -382,6 +382,7 @@ message StreamEventsResponse {
     // The slot's identifier
     string slot_id = 3;
     string slot_name = 4;
+    string unit_type = 5;
   }
 
   /**
