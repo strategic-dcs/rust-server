@@ -85,14 +85,26 @@ end
 
 function handler.onPlayerChangeSlot(playerId)
   local playerInfo = net.get_player_info(playerId)
-  local coalition, slot, slotName, slotType
+  local coalition, slot, unitName, unitType
 
   if playerInfo ~= nil then
     coalition = playerInfo.side + 1 -- offsetting for grpc COALITION enum
     slot = playerInfo.slot
-    slotName = DCS.getUnitProperty(playerInfo.slot, DCS.UNIT_GROUPNAME)
-    slotType = DCS.getUnitProperty(playerInfo.slot, DCS.UNIT_TYPE)
+    unitName = DCS.getUnitProperty(playerInfo.slot, DCS.UNIT_NAME)
+    unitType = DCS.getUnitProperty(playerInfo.slot, DCS.UNIT_TYPE)
   end
+
+  local event = {
+    time = DCS.getModelTime(),
+    event = {
+      type = "playerChangeSlot",
+      playerId = playerId,
+      coalition = coalition,
+      slotId = slot,
+      unitName = unitName,
+      unitType = unitType,
+    },
+  }
 
   grpc.event({
     time = DCS.getModelTime(),
@@ -101,8 +113,8 @@ function handler.onPlayerChangeSlot(playerId)
       playerId = playerId,
       coalition = coalition,
       slotId = slot,
-      slotName = slotName,
-      slotType = slotType,
+      unitName = unitName,
+      unitType = unitType,
     },
   })
 end
