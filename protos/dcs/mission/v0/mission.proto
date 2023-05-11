@@ -381,7 +381,7 @@ message StreamEventsResponse {
     dcs.common.v0.Coalition coalition = 2;
     // The slot's identifier
     string slot_id = 3;
-    string unit_name = 4;
+    string group_name = 4;
     string unit_type = 5;
   }
 
