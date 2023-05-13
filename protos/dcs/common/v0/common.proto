@@ -236,6 +236,8 @@ message Unit {
   // The number of this unit in the group. Does not change as units are
   // destroyed
   uint32 number_in_group = 11;
+  // If we're in the air or not
+  bool in_air = 12;
 }
 
 /**

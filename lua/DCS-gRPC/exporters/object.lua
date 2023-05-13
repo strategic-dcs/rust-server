@@ -32,6 +32,7 @@ GRPC.exporters.unit = function(unit)
     playerName = Unit.getPlayerName(unit),
     group = group,
     numberInGroup = unit:getNumber(),
+    inAir = unit:inAir(),
     rawTransform = GRPC.exporters.rawTransform(unit),
   }
 end

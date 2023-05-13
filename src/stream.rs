@@ -468,6 +468,7 @@ impl UnitState {
             orientation,
             velocity,
             player_name,
+            in_air,
         } = res.into_inner();
 
         self.update_time = time;
@@ -496,6 +497,9 @@ impl UnitState {
                 changed = true;
             }
         }
+
+        // Just pass through the current boolean value
+        self.unit.in_air = in_air;
 
         // keep track of when it was last checked and changed and determine a corresponding backoff
         self.last_checked = Instant::now();

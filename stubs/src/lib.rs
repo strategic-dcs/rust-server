@@ -58,6 +58,7 @@ mod tests {
                                     "id": 1,
                                     "name": "Aerial-1-1",
                                     "callsign": "Enfield11",
+                                    "inAir": true,
                                     "coalition": 3,
                                     "type": "FA-18C_hornet",
                                     "playerName": "New callsign",
@@ -95,6 +96,7 @@ mod tests {
                             player_name: Some("New callsign".to_string()),
                             group: None,
                             number_in_group: 1,
+                            in_air: true,
                             position: Some(Default::default()),
                             orientation: Some(Orientation {
                                 heading: Default::default(),
