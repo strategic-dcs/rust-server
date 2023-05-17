@@ -65,7 +65,10 @@ end
 
 GRPC.methods.markToAll = function(params)
   local point = {x=params.position.lat, y=0, z=params.position.lon}
-  local idx = getMarkId()
+
+  -- If we have been provided with an ID, use it
+  local idx = params.id
+  if idx == nil then idx = getMarkId() end
 
   trigger.action.markToAll(idx, params.text, point, params.readOnly, params.message)
 
@@ -76,7 +79,10 @@ end
 
 GRPC.methods.markToCoalition = function(params)
   local point = {x=params.position.lat, y=0, z=params.position.lon}
-  local idx = getMarkId()
+
+  -- If we have been provided with an ID, use it
+  local idx = params.id
+  if idx == nil then idx = getMarkId() end
 
   local coalition = params.coalition - 1 -- Decrement for non zero-indexed gRPC enum
   trigger.action.markToCoalition(idx, params.text, point, coalition, params.readOnly, params.message)
@@ -88,7 +94,10 @@ end
 
 GRPC.methods.markToGroup = function(params)
   local point = {x=params.position.lat, y=0, z=params.position.lon}
-  local idx = getMarkId()
+
+  -- If we have been provided with an ID, use it
+  local idx = params.id
+  if idx == nil then idx = getMarkId() end
 
   trigger.action.markToGroup(idx, params.text, point, params.groupId, params.readOnly, params.message)
 
@@ -104,7 +113,11 @@ GRPC.methods.removeMark = function(params)
 end
 
 GRPC.methods.markupToAll = function(params)
-  local idx = getMarkId()
+
+  -- If we have been provided with an ID, use it
+  local idx = params.id
+  if idx == nil then idx = getMarkId() end
+
   local coalition = params.coalition or -1
 
    -- Number of points is variable so we need to make a table that we unpack
