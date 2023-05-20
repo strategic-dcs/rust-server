@@ -80,6 +80,7 @@ message AddGroupRequest {
     optional uint32 unit_id = 4;
     optional uint32 heading = 5;
     Skill skill = 6;
+    optional bool player_can_drive = 7;
   }
 
   message ShipGroupTemplate {

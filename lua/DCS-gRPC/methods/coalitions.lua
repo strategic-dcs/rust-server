@@ -42,6 +42,11 @@ local createGroundUnitsTemplate = function(unitListTemplate)
       heading = unitTemplate.heading,
       playerCanDrive = true
     }
+
+    if unitTemplate.playerCanDrive ~= nil then
+      unit.playerCanDrive = unitTemplate.playerCanDrive
+    end
+
     table.insert(units, unit)
   end
 
@@ -103,6 +108,11 @@ local createGroundGroupTemplate = function(groupTemplate)
     groupTaskId = groupTaskId + 1
   end
 
+  local uncontrollable = false
+  if groupTemplate.uncontrollable ~= nil then
+    uncontrollable = groupTemplate.uncontrollable
+  end
+
   local groupTable = {
     name = groupTemplate.name,
     route = {
@@ -130,7 +140,7 @@ local createGroundGroupTemplate = function(groupTemplate)
     task = "Ground Nothing",
     taskSelected = true,
     tasks = {},
-    uncontrollable = false,
+    uncontrollable = uncontrollable,
     units = createGroundUnitsTemplate(groupTemplate.units),
     visible = false,
     x = groupTemplate.position.lat,
