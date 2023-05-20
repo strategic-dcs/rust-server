@@ -78,7 +78,7 @@ message AddGroupRequest {
     string type = 2;
     dcs.common.v0.InputPosition position = 3;
     optional uint32 unit_id = 4;
-    optional uint32 heading = 5;
+    optional double heading = 5;
     Skill skill = 6;
     optional bool player_can_drive = 7;
   }
