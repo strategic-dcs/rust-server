@@ -69,6 +69,7 @@ GRPC.methods.getUnitTransform = function(params)
   local xform = GRPC.exporters.rawTransform(unit)
   xform.playerName = unit:getPlayerName()
   xform.inAir = unit:inAir()
+  xform.fuel = unit:getFuel()
 
   return GRPC.success({
     time = timer.getTime(),

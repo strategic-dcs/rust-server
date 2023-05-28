@@ -469,6 +469,7 @@ impl UnitState {
             velocity,
             player_name,
             in_air,
+            fuel,
         } = res.into_inner();
 
         self.update_time = time;
@@ -498,8 +499,9 @@ impl UnitState {
             }
         }
 
-        // Just pass through the current boolean value
+        // Just pass through the current boolean value for in_air / fuel
         self.unit.in_air = in_air;
+        self.unit.fuel = fuel;
 
         // keep track of when it was last checked and changed and determine a corresponding backoff
         self.last_checked = Instant::now();

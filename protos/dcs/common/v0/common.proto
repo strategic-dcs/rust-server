@@ -238,6 +238,7 @@ message Unit {
   uint32 number_in_group = 11;
   // If we're in the air or not
   bool in_air = 12;
+  double fuel = 13;
 }
 
 /**

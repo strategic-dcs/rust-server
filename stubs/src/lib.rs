@@ -97,6 +97,7 @@ mod tests {
                             group: None,
                             number_in_group: 1,
                             in_air: true,
+                            fuel: 0.5,
                             position: Some(Default::default()),
                             orientation: Some(Orientation {
                                 heading: Default::default(),

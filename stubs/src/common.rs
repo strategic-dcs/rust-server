@@ -14,6 +14,7 @@ pub mod v0 {
         pub velocity: Option<Vector>,
         pub player_name: Option<String>,
         pub in_air: Option<bool>,
+        pub fuel: Option<f64>,
     }
 
     pub(crate) struct Transform {
@@ -22,6 +23,7 @@ pub mod v0 {
         pub velocity: Velocity,
         pub player_name: String,
         pub in_air: bool,
+        pub fuel: f64,
     }
 
     impl From<RawTransform> for Transform {
@@ -35,6 +37,7 @@ pub mod v0 {
                 velocity,
                 player_name,
                 in_air,
+                fuel,
             } = raw;
             let position = position.unwrap_or_default();
             let position_north = position_north.unwrap_or_default();
@@ -44,6 +47,7 @@ pub mod v0 {
             let velocity = velocity.unwrap_or_default();
             let player_name = player_name.unwrap_or_default();
             let in_air = in_air.unwrap_or_default();
+            let fuel = fuel.unwrap_or_default();
 
             let projection_error =
                 (position_north.z - position.u).atan2(position_north.x - position.v);
@@ -85,6 +89,7 @@ pub mod v0 {
                 velocity,
                 player_name,
                 in_air,
+                fuel,
             }
         }
     }
@@ -100,6 +105,7 @@ pub mod v0 {
         group: Option<Group>,
         number_in_group: u32,
         in_air: bool,
+        fuel: f64,
         raw_transform: Option<RawTransform>,
     }
 
@@ -115,6 +121,7 @@ pub mod v0 {
                 number_in_group,
                 raw_transform,
                 in_air: _,
+                fuel: _,
             } = i;
             let transform = Transform::from(raw_transform.unwrap_or_default());
             Unit {
@@ -125,6 +132,7 @@ pub mod v0 {
                 r#type,
                 player_name: Some(transform.player_name),
                 in_air: transform.in_air,
+                fuel: transform.fuel,
                 position: Some(transform.position),
                 orientation: Some(transform.orientation),
                 velocity: Some(transform.velocity),

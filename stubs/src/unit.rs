@@ -24,6 +24,7 @@ pub mod v0 {
                 velocity: Some(transform.velocity),
                 player_name: Some(transform.player_name),
                 in_air: transform.in_air,
+                fuel: transform.fuel,
             }
         }
     }

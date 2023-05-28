@@ -33,6 +33,7 @@ GRPC.exporters.unit = function(unit)
     group = group,
     numberInGroup = unit:getNumber(),
     inAir = unit:inAir(),
+    fuel = unit:getFuel(),
     rawTransform = GRPC.exporters.rawTransform(unit),
   }
 end
