@@ -105,7 +105,6 @@ local createGroundGroupTemplate = function(groupTemplate)
         }
       }
     })
-    groupTaskId = groupTaskId + 1
   end
 
   local uncontrollable = false
