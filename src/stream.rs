@@ -7,15 +7,17 @@ use stubs::coalition::v0::coalition_service_server::CoalitionService;
 use stubs::coalition::v0::GetGroupsRequest;
 use stubs::coalition::v0::GetStaticObjectsRequest;
 use stubs::common;
-use stubs::common::v0::{Coalition, GroupCategory, Orientation, Position, Unit, Static, Vector, Velocity};
+use stubs::common::v0::{
+    Coalition, GroupCategory, Orientation, Position, Static, Unit, Vector, Velocity,
+};
 use stubs::group::v0::group_service_server::GroupService;
 use stubs::group::v0::GetUnitsRequest;
 use stubs::mission::v0::stream_events_response::{BirthEvent, DeadEvent, Event};
 use stubs::mission::v0::stream_units_response::{UnitGone, Update};
 use stubs::mission::v0::{StreamUnitsRequest, StreamUnitsResponse};
 use stubs::unit::v0::unit_service_server::UnitService;
-use stubs::unit::v0::{GetTransformRequest, GetTransformResponse};
 use stubs::unit::v0::{GetStaticTransformRequest, GetStaticTransformResponse};
+use stubs::unit::v0::{GetTransformRequest, GetTransformResponse};
 use tokio::sync::mpsc::error::SendError;
 use tokio::sync::mpsc::Sender;
 use tokio::time::MissedTickBehavior;
@@ -249,7 +251,9 @@ async fn handle_event(
                     update: Some(Update::Static(static_object.clone())),
                 }))
                 .await?;
-            state.statics.insert(static_object.name.clone(), StaticState::new(static_object));
+            state
+                .statics
+                .insert(static_object.name.clone(), StaticState::new(static_object));
         }
 
         Event::Dead(DeadEvent {
@@ -272,7 +276,6 @@ async fn handle_event(
                     .await?;
             }
         }
-
 
         _ => {}
     }
@@ -431,7 +434,6 @@ struct StaticState {
     last_changed: Instant,
     is_gone: bool,
 }
-
 
 impl UnitState {
     fn new(unit: Unit) -> Self {
