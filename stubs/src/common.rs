@@ -104,8 +104,6 @@ pub mod v0 {
         r#type: String,
         group: Option<Group>,
         number_in_group: u32,
-        in_air: bool,
-        fuel: f64,
         raw_transform: Option<RawTransform>,
     }
 
@@ -120,8 +118,6 @@ pub mod v0 {
                 group,
                 number_in_group,
                 raw_transform,
-                in_air: _,
-                fuel: _,
             } = i;
             let transform = Transform::from(raw_transform.unwrap_or_default());
             Unit {

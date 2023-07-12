@@ -75,7 +75,7 @@ GRPC.exporters.static = function(static)
     type = static:getTypeName(),
     name = static:getName(),
     coalition = static:getCoalition() + 1, -- Increment for non zero-indexed gRPC enum
-    position = GRPC.exporters.position(static:getPoint()),
+    rawTransform = GRPC.exporters.rawTransform(static),
   }
 end
 

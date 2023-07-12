@@ -58,10 +58,13 @@ mod tests {
                                     "id": 1,
                                     "name": "Aerial-1-1",
                                     "callsign": "Enfield11",
-                                    "inAir": true,
                                     "coalition": 3,
+                                    "rawTransform": {
+                                        "fuel": 0.5,
+                                        "inAir": true,
+                                        "playerName": "New callsign"
+                                    },
                                     "type": "FA-18C_hornet",
-                                    "playerName": "New callsign",
                                     "numberInGroup": 1
                                 }
                             }
