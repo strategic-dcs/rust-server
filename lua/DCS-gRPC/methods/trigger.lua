@@ -124,7 +124,7 @@ GRPC.methods.markupToAll = function(params)
    -- later and add all parameters after the points into it as well
   local packedParams = {}
   for _, value in ipairs(params.points) do
-    table.insert(packedParams, {x=params.position.lat, y=0, z=params.position.lon})
+    table.insert(packedParams, {x=value.lat, y=value.alt, z=value.lon})
   end
 
   table.insert(packedParams, {
