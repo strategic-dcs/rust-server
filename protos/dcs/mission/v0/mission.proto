@@ -371,6 +371,8 @@ message StreamEventsResponse {
     uint32 player_id = 1;
     // what was typed
     string message = 2;
+    // Target coalition
+    optional dcs.common.v0.Coalition coalition = 3;
   }
 
   // fired when the player changes across to a slot

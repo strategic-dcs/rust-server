@@ -42,16 +42,32 @@ function handler.onSimulationStop()
   grpc = nil
 end
 
-function handler.onPlayerTrySendChat(playerID, msg)
-  -- note: currently `all` (third parameter) will always `=true` regardless if the target is to the coalition/team
-  --        or to everybody. When ED fixes this, implementation should determine the dcs.common.v0.Coalition
+function handler.onPlayerTrySendChat(playerID, msg, side)
+
+  -- we default to coalition.ALL chat (side = -1)
+  local coalition = 0
+
+  -- side -2 = Side Chat
+  -- side -1 = All Chat
+  -- side +2 = Server Messages to player
+
+  if side == -2 then
+    local playerInfo = net.get_player_info(playerID)
+    if playerInfo ~= nil then
+      coalition = playerInfo.side + 1
+    else
+      -- If we don't have a side, we're netural
+      coalition = 1
+    end
+  end
 
   grpc.event({
     time = DCS.getModelTime(),
     event = {
       type = "playerSendChat",
       playerId = playerID,
-      message = msg
+      message = msg,
+      coalition = coalition
     },
   })
 
