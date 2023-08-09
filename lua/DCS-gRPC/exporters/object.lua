@@ -63,7 +63,7 @@ end
 
 GRPC.exporters.weapon = function(weapon)
   return {
-    id = tonumber(weapon:getName()),
+    id = weapon:tonumber(),
     type = weapon:getTypeName(),
     rawTransform = GRPC.exporters.rawTransform(weapon),
   }
