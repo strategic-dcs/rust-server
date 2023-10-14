@@ -43,6 +43,10 @@ local createGroundUnitsTemplate = function(unitListTemplate)
       playerCanDrive = true
     }
 
+    if unitTemplate.liveryId ~= nil then
+      unit.livery_id = unitTemplate.liveryId
+    end
+
     if unitTemplate.playerCanDrive ~= nil then
       unit.playerCanDrive = unitTemplate.playerCanDrive
     end

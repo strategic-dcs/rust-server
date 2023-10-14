@@ -81,6 +81,7 @@ message AddGroupRequest {
     optional double heading = 5;
     Skill skill = 6;
     optional bool player_can_drive = 7;
+    optional string livery_id = 8;
   }
 
   message ShipGroupTemplate {
