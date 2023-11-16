@@ -22,7 +22,7 @@ GRPC.methods.setAlarmState = function(params)
   end
 
   local controller = obj:getController()
-  local category_id = obj:getCategory()
+  local category_id = Object.getCategory(obj)
 
   local state_id = AI['Option'][group_option_category[category_id]]['id']['ALARM_STATE']
 
