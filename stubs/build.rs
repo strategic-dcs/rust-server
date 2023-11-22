@@ -71,6 +71,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "dcs.mission.v0.StreamEventsResponse.GroupCommandEvent.details",
             r#"#[serde(with = "crate::utils::proto_struct")]"#,
         )
+        .type_attribute(
+            "dcs.mission.v0.StreamWeaponsResponse.update",
+            "#[allow(clippy::large_enum_variant)]",
+        )
+        .type_attribute(
+            "dcs.weapon.v0.GetTransformResponse",
+            "#[serde(from = \"GetTransformResponseIntermediate\")]",
+        )
         .build_server(cfg!(feature = "server"))
         .build_client(cfg!(feature = "client"))
         .compile(&["../protos/dcs/dcs.proto"], &["../protos"])?;

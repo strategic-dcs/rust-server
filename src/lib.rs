@@ -11,6 +11,7 @@ mod server;
 mod shutdown;
 mod stats;
 mod stream;
+mod weapon;
 
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicBool, Ordering};

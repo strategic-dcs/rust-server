@@ -1,0 +1,82 @@
+syntax = "proto3";
+package dcs.weapon.v0;
+import "dcs/common/v0/common.proto";
+option csharp_namespace = "RurouniJones.Dcs.Grpc.V0.Weapon";
+option go_package = "github.com/DCS-gRPC/go-bindings/dcs/v0/weapon";
+
+service WeaponService {
+
+  // Streams weapon updates
+  // Separate stream to monitor weapon updates allowing for different refresh
+  // intervals and further development
+  rpc StreamWeapons(StreamWeaponsRequest) returns (stream StreamWeaponsResponse) {}
+
+  /**
+   * Get information about the weapon in 3D space, including its position,
+   * orientation and velocity.
+   */
+  rpc GetTransform(GetTransformRequest) returns (GetTransformResponse) {}
+
+  // Obtain a list of all known weapon IDs
+  rpc GetTrackedWeaponIds(GetTrackedWeaponIdsRequest) returns (GetTrackedWeaponIdsResponse) {}
+
+  // Destroy a weapon in flight
+  rpc Destroy(DestroyRequest) returns (DestroyResponse) {}
+}
+
+
+message StreamWeaponsRequest {
+  // The poll rate in milliseconds at which the gRPC server communicates with
+  // the DCS mission to retrieve the latest unit positions. The lower the
+  // `poll_rate` the higher the amount of requests send to to the DCS mission.
+  // Default: 1000
+  optional uint32 poll_rate = 1000;
+}
+
+message StreamWeaponsResponse {
+  message WeaponGone {
+    uint32 id = 1;
+  }
+
+  double time = 1;
+
+  oneof update {
+    // The unit is either new or its position or attitude changed.
+    dcs.common.v0.Weapon weapon = 2;
+
+    // The weapon does not exist anymore.
+    WeaponGone gone = 3;
+  }
+}
+
+message GetTransformRequest {
+  uint32 id = 1;
+}
+
+message GetTransformResponse {
+  // Time in seconds since the scenario started.
+  double time = 1;
+  // The position of the static object
+  dcs.common.v0.Position position = 2;
+
+  // E.g. sling loaded cargo enroute
+  // The orientation of the static object in both 2D and 3D space
+  dcs.common.v0.Orientation orientation = 3;
+  // The velocity of the static in both 2D and 3D space
+  dcs.common.v0.Velocity velocity = 4;
+}
+
+
+message DestroyRequest {
+  string name = 1;
+}
+
+message DestroyResponse {
+}
+
+message GetTrackedWeaponIdsRequest {
+}
+
+message GetTrackedWeaponIdsResponse {
+  repeated uint32 weapon_ids = 1;
+}

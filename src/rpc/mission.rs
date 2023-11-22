@@ -32,7 +32,6 @@ impl MissionService for MissionRpc {
                 + 'static,
         >,
     >;
-
     async fn stream_events(
         &self,
         _request: Request<mission::v0::StreamEventsRequest>,

@@ -24,6 +24,12 @@ if isMissionEnv then
   }))
 end
 
+--
+-- Local State
+--
+
+GRPC.state = {}
+GRPC.state.tracked_weapons = {}
 
 --
 -- Export methods
@@ -160,6 +166,7 @@ dofile(GRPC.luaPath .. [[methods\timer.lua]])
 dofile(GRPC.luaPath .. [[methods\trigger.lua]])
 dofile(GRPC.luaPath .. [[methods\unit.lua]])
 dofile(GRPC.luaPath .. [[methods\world.lua]])
+dofile(GRPC.luaPath .. [[methods\wewapon.lua]])
 
 --
 -- RPC request handler

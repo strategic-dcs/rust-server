@@ -65,6 +65,11 @@ GRPC.onDcsEvent = function(event)
     return nil
 
   elseif event.id == world.event.S_EVENT_SHOT then
+    -- Due to needing a record of our weapons before we send to GRPC before
+    -- requesting future transforms, if we're an S_EVENT_SHOT then we just
+    -- add to our table of known weapons
+    GRPC.state.tracked_weapons[event.weapon:tonumber()] = event.weapon
+
     return {
       time = event.time,
       event = {

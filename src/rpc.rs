@@ -22,6 +22,7 @@ mod timer;
 mod trigger;
 mod tts;
 mod unit;
+mod weapon;
 mod world;
 
 #[derive(Clone)]
