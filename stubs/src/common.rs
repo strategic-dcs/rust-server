@@ -176,6 +176,7 @@ pub mod v0 {
         id: u32,
         r#type: String,
         raw_transform: Option<RawTransform>,
+        category: i32,
     }
 
     impl From<WeaponIntermediate> for Weapon {
@@ -183,12 +184,14 @@ pub mod v0 {
             let WeaponIntermediate {
                 id,
                 r#type,
+                category,
                 raw_transform,
             } = i;
             let transform = Transform::from(raw_transform.unwrap_or_default());
             Weapon {
                 id,
                 r#type,
+                category,
                 position: Some(transform.position),
                 orientation: Some(transform.orientation),
                 velocity: Some(transform.velocity),

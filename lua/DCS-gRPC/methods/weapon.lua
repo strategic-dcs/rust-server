@@ -28,15 +28,16 @@ GRPC.methods.weaponDestroy = function(params)
 
   -- We can remove it here too since we destroyed it
   weapon:Destroy()
+  GRPC.state.tracked_weapons[params.id] = nil
   return GRPC.success({})
 end
 
 
-GRPC.methods.getTrackedWeaponIds = function(params)
+GRPC.methods.getTrackedWeaponIds = function()
 
   local weapon_ids = {}
 
-  for k, v in pairs(GPRC.state.tracked_weapons) do
+  for k, _ in pairs(GRPC.state.tracked_weapons) do
     table.insert(weapon_ids, k)
   end
 

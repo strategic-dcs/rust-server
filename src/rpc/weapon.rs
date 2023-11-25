@@ -1,6 +1,6 @@
 use std::pin::Pin;
 
-use futures_util::{Stream};
+use futures_util::Stream;
 use stubs::weapon;
 use stubs::weapon::v0::weapon_service_server::WeaponService;
 
@@ -14,7 +14,6 @@ use crate::shutdown::AbortableStream;
 
 #[tonic::async_trait]
 impl WeaponService for MissionRpc {
-
     type StreamWeaponsStream = Pin<
         Box<
             dyn Stream<Item = Result<weapon::v0::StreamWeaponsResponse, tonic::Status>>
@@ -23,7 +22,6 @@ impl WeaponService for MissionRpc {
                 + 'static,
         >,
     >;
-
 
     async fn stream_weapons(
         &self,

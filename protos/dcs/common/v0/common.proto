@@ -264,6 +264,19 @@ enum GroupCategory {
 }
 
 /**
+ * Weapon Category enumrator.
+ */
+
+enum WeaponCategory {
+  // protolint:disable:next ENUM_FIELD_NAMES_ZERO_VALUE_END_WITH
+  WEAPON_CATEGORY_SHELL = 0;
+  WEAPON_CATEGORY_MISSILE = 1;
+  WEAPON_CATEGORY_ROCKET = 2;
+  WEAPON_CATEGORY_BOMB = 3;
+  WEAPON_CATEGORY_TORPEDO = 4;
+}
+
+/**
  * An instance of a DCS weapon
  *
  * These weapons include everything from autocannon HE shells up to massive
@@ -281,6 +294,8 @@ message Weapon {
   Orientation orientation = 4;
   // The velocity of the unit in both 2D and 3D space
   Velocity velocity = 5;
+  // Weapon Category
+  WeaponCategory category = 6;
 }
 
 /**

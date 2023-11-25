@@ -166,7 +166,7 @@ dofile(GRPC.luaPath .. [[methods\timer.lua]])
 dofile(GRPC.luaPath .. [[methods\trigger.lua]])
 dofile(GRPC.luaPath .. [[methods\unit.lua]])
 dofile(GRPC.luaPath .. [[methods\world.lua]])
-dofile(GRPC.luaPath .. [[methods\wewapon.lua]])
+dofile(GRPC.luaPath .. [[methods\weapon.lua]])
 
 --
 -- RPC request handler

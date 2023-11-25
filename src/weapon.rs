@@ -1,16 +1,16 @@
 use std::collections::HashMap;
-use std::time::{Duration};
+use std::time::Duration;
 
 use futures_util::stream::StreamExt;
-use stubs::common::v0::{
-    Orientation, Position, Vector, Velocity, Weapon
-};
+use stubs::common::v0::{Orientation, Position, Vector, Velocity, Weapon};
 
-use stubs::mission::v0::stream_events_response::{ShotEvent, Event};
+use stubs::mission::v0::stream_events_response::{Event, ShotEvent};
 
-use stubs::weapon::v0::stream_weapons_response::{WeaponGone, Update};
+use stubs::weapon::v0::stream_weapons_response::{Update, WeaponGone};
 use stubs::weapon::v0::weapon_service_server::WeaponService;
-use stubs::weapon::v0::{StreamWeaponsRequest, StreamWeaponsResponse, GetTransformRequest, GetTransformResponse};
+use stubs::weapon::v0::{
+    GetTransformRequest, GetTransformResponse, StreamWeaponsRequest, StreamWeaponsResponse,
+};
 
 use tokio::sync::mpsc::error::SendError;
 use tokio::sync::mpsc::Sender;
@@ -30,11 +30,7 @@ pub async fn stream_weapons(
     let poll_rate = Duration::from_millis(poll_rate as u64);
     let mut state = State {
         weapons: HashMap::new(),
-        ctx: Context {
-            rpc,
-            tx,
-            poll_rate,
-        },
+        ctx: Context { rpc, tx, poll_rate },
     };
 
     // We are purely reactive on events and do not track non-event based as there isn't a function
@@ -81,33 +77,25 @@ struct Context {
 }
 
 /// Update the given [State] based on the given [Event].
-async fn handle_event(
-    state: &mut State,
-    time: f64,
-    event: Event,
-) -> Result<(), Error> {
-    match event {
-        // When a weapon is birthed (shot), we need to add it to the list
-        // to monitor next update
-        Event::Shot(ShotEvent {
-            weapon: Some(weapon),
-            ..
-        }) => {
-            state
-                .ctx
-                .tx
-                .send(Ok(StreamWeaponsResponse {
-                    time,
-                    update: Some(Update::Weapon(weapon.clone())),
-                }))
-                .await?;
+async fn handle_event(state: &mut State, time: f64, event: Event) -> Result<(), Error> {
+    // When a weapon is birthed (shot), we need to add it to the list
+    // to monitor next update
+    if let Event::Shot(ShotEvent {
+        weapon: Some(weapon),
+        ..
+    }) = event
+    {
+        state
+            .ctx
+            .tx
+            .send(Ok(StreamWeaponsResponse {
+                time,
+                update: Some(Update::Weapon(weapon.clone())),
+            }))
+            .await?;
 
-            // And add to our monitored events
-            state
-                .weapons
-                .insert(weapon.id.clone(), WeaponState::new(weapon));
-        },
-        _ => {}
+        // And add to our monitored events
+        state.weapons.insert(weapon.id, WeaponState::new(weapon));
     }
 
     Ok(())
@@ -119,7 +107,7 @@ async fn update_weapons(state: &mut State) -> Result<(), Error> {
     // Update all weapons in parallel (will queue a request for each unit, but the execution will
     // still be throttled by the throughputLimit setting).
     futures_util::future::try_join_all(
-        weapons 
+        weapons
             .values_mut()
             .map(|weapon_state| update_weapon(&state.ctx, weapon_state)),
     )
@@ -133,9 +121,7 @@ async fn update_weapons(state: &mut State) -> Result<(), Error> {
 }
 
 async fn update_weapon(ctx: &Context, weapon_state: &mut WeaponState) -> Result<(), Error> {
-
-    // weapons are always checked because they tend not to be stationary like ground units :) 
-
+    // weapons are always checked because they tend not to be stationary like ground units :)
     match weapon_state.update(ctx).await {
         Ok(changed) => {
             if changed {
@@ -172,7 +158,6 @@ async fn update_weapon(ctx: &Context, weapon_state: &mut WeaponState) -> Result<
     }
 }
 
-
 /// The last know information about a unit and various other information to track whether it is
 /// worth checking the unit for updates or not.
 struct WeaponState {
@@ -196,9 +181,7 @@ impl WeaponState {
 
         let res = WeaponService::get_transform(
             &ctx.rpc,
-            Request::new(GetTransformRequest {
-                id: self.weapon.id.clone(),
-            }),
+            Request::new(GetTransformRequest { id: self.weapon.id }),
         )
         .await?;
         let GetTransformResponse {
@@ -232,7 +215,6 @@ impl WeaponState {
         Ok(changed)
     }
 }
-
 
 #[derive(Debug, thiserror::Error)]
 #[allow(clippy::large_enum_variant)]

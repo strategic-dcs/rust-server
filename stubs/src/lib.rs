@@ -16,8 +16,8 @@ pub mod timer;
 pub mod trigger;
 pub mod tts;
 pub mod unit;
-pub mod weapon;
 mod utils;
+pub mod weapon;
 pub mod world;
 
 #[cfg(test)]
