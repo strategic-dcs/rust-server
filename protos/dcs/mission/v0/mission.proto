@@ -479,6 +479,30 @@ message StreamEventsResponse {
     optional string srs_client_name = 4;
   }
 
+  /**
+   * Fired for every splash event created during the splash damage script for
+   * explicit unit / object scan hits
+   */
+  message SplashDamageEvent {
+    // ID of weapon that triggered the splash event
+    uint32 weapon_id = 1;
+
+    // DCS Unit ID of target that an explosion was created on
+    uint32 target_id = 2;
+  }
+
+  /**
+    * Fired for every "large explosions" event during the splash damage script so we know 
+    * Where an explosion occured, and can associate back any recent deaths to a likely source
+    */
+  message SplashExplosionEvent {
+    // ID of weapon that triggered the splash event
+    uint32 weapon_id = 1;
+
+    // Impact point on which an explosion was created on
+    dcs.common.v0.Position position = 2;
+  }
+
   // The event's mission time.
   double time = 1;
   oneof event {
@@ -532,6 +556,8 @@ message StreamEventsResponse {
     GroupCommandEvent group_command = 8198;
     SimulationFpsEvent simulation_fps = 8199;
     TtsEvent tts = 8200;
+    SplashDamageEvent splash_damage = 8201;
+    SplashExplosionEvent splash_explosion = 8202;
   }
 }
 
