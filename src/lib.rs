@@ -196,10 +196,31 @@ pub fn tts(_lua: &Lua, (ssml, freq, opts): (String, u64, Option<TtsOptions>)) ->
 pub fn event(lua: &Lua, event: Value) -> LuaResult<()> {
     let start = Instant::now();
 
-    let event: StreamEventsResponse = match lua.from_value(event) {
+    let event: StreamEventsResponse = match lua.from_value(event.clone()) {
         Ok(event) => event,
         Err(err) => {
-            log::error!("failed to deserialize event: {}", err);
+            // If we failed to get the from_value to a specific event, try and
+            // aquire the event.type from the response so we can give context
+            // to investigate rather than running debug mode
+
+            let name: String = match event {
+                Value::Table(event_table) => match event_table.get("event") {
+                    Ok(event_data) => match event_data {
+                        Value::Table(event_data) => match event_data.get("type") {
+                            Ok(t) => match t {
+                                Value::String(s) => (s.to_str()?).to_string(),
+                                _ => "type is not a string".to_string(),
+                            },
+                            Err(..) => "type not found in response.event".to_string(),
+                        },
+                        _ => "response.event is not a table".to_string(),
+                    },
+                    Err(..) => "event not found in response".to_string(),
+                },
+                _ => "response is not a table...".to_string(),
+            };
+            log::error!("failed to deserialize event type {}: {}", name, err);
+
             // In certain cases DCS crashes when we return an error back to Lua here (see
             // https://github.com/DCS-gRPC/rust-server/issues/19), which we are working around
             // by intercepting and logging the error instead.
