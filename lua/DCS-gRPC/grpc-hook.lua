@@ -101,7 +101,13 @@ end
 
 function handler.onPlayerChangeSlot(playerId)
   local playerInfo = net.get_player_info(playerId)
-  local coalition, slot, groupName, unitType
+
+  -- Default to 1 (spectators + 1 for grpc COALITION enum)
+  local coalition = 1
+
+  -- Default to empty, which matches spectators, which happens on relinquished
+  -- disconnects, and other events where playerInfo goes to null
+  local slot, groupName, unitType = ""
 
   if playerInfo ~= nil then
     coalition = playerInfo.side + 1 -- offsetting for grpc COALITION enum
