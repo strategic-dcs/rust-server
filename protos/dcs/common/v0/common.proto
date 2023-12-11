@@ -287,7 +287,7 @@ message Weapon {
   uint32 id = 1;
   // The DCS type-name of the weapon. e.g "Matra_S530D", "HAWK_RAKETA" or
   // "weapons.shells.53-UOR-281U"
-  string type = 2;
+  optional string type = 2;
   // The position of the Weapon
   Position position = 3;
   // The orientation of the unit in both 2D and 3D space
@@ -295,7 +295,7 @@ message Weapon {
   // The velocity of the unit in both 2D and 3D space
   Velocity velocity = 5;
   // Weapon Category
-  WeaponCategory category = 6;
+  optional WeaponCategory category = 6;
 }
 
 /**

@@ -174,9 +174,9 @@ pub mod v0 {
     #[serde(rename_all = "camelCase")]
     struct WeaponIntermediate {
         id: u32,
-        r#type: String,
+        r#type: Option<String>,
         raw_transform: Option<RawTransform>,
-        category: i32,
+        category: Option<i32>,
     }
 
     impl From<WeaponIntermediate> for Weapon {
