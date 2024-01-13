@@ -42,7 +42,7 @@ GRPC.methods.getTrackedWeaponIds = function()
   end
 
   return GRPC.success({
-    weapon_ids = weapon_ids
+    weaponIds = weapon_ids
   })
 
 end
