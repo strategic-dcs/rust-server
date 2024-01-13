@@ -18,6 +18,8 @@ end
 
 GRPC.exporters.unit = function(unit)
 
+  if unit == nil or not unit.isExist or not unit:isExist() then return nil end
+
   local group = unit:getGroup()
   if group then
     group = GRPC.exporters.group(group)
