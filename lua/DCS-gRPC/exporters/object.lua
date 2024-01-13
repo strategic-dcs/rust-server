@@ -81,6 +81,10 @@ GRPC.exporters.static = function(static)
 end
 
 GRPC.exporters.airbase = function(airbase)
+
+  -- Airbase may not exist (deleted farp, moved farp)
+  if airbase == nil or not airbase.isExist or not airbase:isExist() then return nil end
+
   local a = {
     name = airbase:getName(),
     callsign = airbase:getCallsign(),
