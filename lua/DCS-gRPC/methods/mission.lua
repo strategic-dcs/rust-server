@@ -65,10 +65,25 @@ GRPC.onDcsEvent = function(event)
     return nil
 
   elseif event.id == world.event.S_EVENT_SHOT then
+
+    -- In some cases, weapon might be nil or already dead so we avoid tracking
+    -- since there is nothing to track
+    if event.weapon == nil or not event.weapon.isExist or not event.weapon:isExist() then
+      return nil
+    end
+
+    -- we also check it has a weapon id; I don't expect this will ever be null,
+    -- but better safe than sorry...
+    local weapon_id = event.weapon:tonumber()
+    if weapon_id == nil then
+      GRPC.logWarning("EVENT_SHOT: weapon_id nil")
+      return nil
+    end
+
     -- Due to needing a record of our weapons before we send to GRPC before
     -- requesting future transforms, if we're an S_EVENT_SHOT then we just
     -- add to our table of known weapons
-    GRPC.state.tracked_weapons[event.weapon:tonumber()] = event.weapon
+    GRPC.state.tracked_weapons[weapon_id] = event.weapon
 
     return {
       time = event.time,

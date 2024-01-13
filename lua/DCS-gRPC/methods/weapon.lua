@@ -8,6 +8,10 @@ GRPC.methods.getWeaponTransform = function(params)
     return GRPC.errorNotFound("weapon " .. tostring(params.id) .. " does not exist")
   end
 
+  if not weapon.isExist then
+    return GRPC.errorNotFound("weapon object missing isExist " .. tostring(params.id) .. " does not exist")
+  end
+
   if not weapon:isExist() then
     GRPC.state.tracked_weapons[params.id] = nil
     return GRPC.errorNotFound("weapon " .. tostring(params.id) .. " does not exist")
@@ -23,6 +27,11 @@ end
 GRPC.methods.weaponDestroy = function(params)
   local weapon = GRPC.state.tracked_weapons[params.id]
   if weapon == nil then
+    return GRPC.errorNotFound("weapon " .. tostring(params.id) .. " does not exist")
+  end
+
+  if not weapon.isExist or not weapon:isExist() then
+    GRPC.state.tracked_weapons[params.id] = nil
     return GRPC.errorNotFound("weapon " .. tostring(params.id) .. " does not exist")
   end
 

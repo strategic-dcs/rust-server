@@ -64,6 +64,13 @@ GRPC.exporters.group = function(group)
 end
 
 GRPC.exporters.weapon = function(weapon)
+
+  -- Skip weapons that don't exist otherwise getTypeName, getCategory, and
+  -- rawTransform all fail as it doesn't exist
+  if weapon == nil or not weapon.isExist or not weapon:isExist() then
+    return nil
+  end
+
   return {
     id = weapon:tonumber(),
     type = weapon:getTypeName(),
