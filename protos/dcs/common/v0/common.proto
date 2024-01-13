@@ -221,8 +221,9 @@ message Unit {
   string callsign = 3;
   // The coalition the unit belongs to
   Coalition coalition = 4;
-  // The DCS type-name of the unit. e.g "MiG-29A", "ZSU_57_2" or "Hawk ln"
-  string type = 5;
+  // The DCS type-name of the unit. e.g "MiG-29A", "ZSU_57_2" or "Hawk ln", can
+  // be null on dead/kill/unitLost etc.
+  optional string type = 5;
   // The position of the unit
   Position position = 6;
   // The orientation of the unit in both 2D and 3D space

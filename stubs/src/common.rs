@@ -101,7 +101,7 @@ pub mod v0 {
         name: String,
         callsign: String,
         coalition: i32,
-        r#type: String,
+        r#type: Option<String>,
         group: Option<Group>,
         number_in_group: u32,
         raw_transform: Option<RawTransform>,
