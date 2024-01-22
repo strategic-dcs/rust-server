@@ -95,11 +95,16 @@ GRPC.onDcsEvent = function(event)
     }
 
   elseif event.id == world.event.S_EVENT_HIT then
+
+    -- Initiator is optional, but if we have an empty map we get an error
+    local initiator = {initiator = typed_exporter(event.initiator)}
+    if initiator.initiator == nil then initiator = nil end
+
     return {
       time = event.time,
       event = {
         type = "hit",
-        initiator = {initiator = typed_exporter(event.initiator)},
+        initiator = initiator,
         weapon = exporter(event.weapon),
         target = {target = typed_exporter(event.target)},
         weaponName = event.weapon_name,
