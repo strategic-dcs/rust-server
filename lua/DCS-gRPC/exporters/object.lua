@@ -18,7 +18,13 @@ end
 
 GRPC.exporters.unit = function(unit)
 
-  if unit == nil or not unit.isExist or not unit:isExist() then return nil end
+  if unit == nil then return nil end
+
+  -- Try and get the unit id as sometimes this errors with "Unit doesn't exist"
+  -- we dont use isExist() because sometimes isExist returns false whilst all
+  -- the data is still accessible and we want it!
+  local status, unit_id = pcall(unit.getID, unit)
+  if status == false then return nil end
 
   local group = unit:getGroup()
   if group then
@@ -26,7 +32,7 @@ GRPC.exporters.unit = function(unit)
   end
 
   return {
-    id = tonumber(unit:getID()),
+    id = tonumber(unit_id),
     name = unit:getName(),
     callsign = unit:getCallsign(),
     coalition = unit:getCoalition() + 1, -- Increment for non zero-indexed gRPC enum
