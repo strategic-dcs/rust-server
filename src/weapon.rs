@@ -43,7 +43,7 @@ pub async fn stream_weapons(
 
     // create an interval used to poll the mission for updates
     let mut interval = tokio::time::interval(poll_rate);
-    interval.set_missed_tick_behavior(MissedTickBehavior::Delay);
+    interval.set_missed_tick_behavior(MissedTickBehavior::Skip);
 
     loop {
         // wait for either the next event or the next tick, whatever happens first
