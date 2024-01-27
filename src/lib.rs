@@ -141,12 +141,26 @@ pub fn next(lua: &Lua, (env, callback): (i32, Function)) -> LuaResult<bool> {
                 .params(lua)
                 .map_err(|err| mlua::Error::ExternalError(Arc::new(Error::SerializeParams(err))))?;
 
+            let mut weapon_transform_request_id: String = "".to_string();
+
             if let Some(params) = &params {
-                log::debug!(
-                    "Sending request `{}`: {}",
-                    method,
-                    pretty_print_value(params.clone(), 0)?
-                );
+                if method == "getWeaponTransform" {
+                    weapon_transform_request_id = match params {
+                        Value::Table(t) => t.get("id").unwrap_or_default(),
+                        _ => "unknown".to_string(),
+                    };
+
+                    log::info!(
+                        "Sending request `{}(id={})`",
+                        method,
+                        weapon_transform_request_id);
+                } else {
+                    log::debug!(
+                        "Sending request `{}`: {}",
+                        method,
+                        pretty_print_value(params.clone(), 0)?
+                    );
+                }
             } else {
                 log::debug!("Sending request `{}`", method,);
             }
@@ -163,6 +177,11 @@ pub fn next(lua: &Lua, (env, callback): (i32, Function)) -> LuaResult<bool> {
             }
 
             let res: Value<'_> = result.get("result")?;
+
+            if method == "getWeaponTransform" {
+                log::info!("Receiving: getWeaponTransform(id={})", weapon_transform_request_id);
+            }
+
             log::debug!("Receiving: {}", pretty_print_value(res.clone(), 0)?);
 
             next.success(lua, &res).map_err(|err| {
