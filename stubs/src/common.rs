@@ -144,7 +144,7 @@ pub mod v0 {
         id: u32,
         name: String,
         coalition: i32,
-        r#type: String,
+        r#type: Option<String>,
         raw_transform: Option<RawTransform>,
     }
 
