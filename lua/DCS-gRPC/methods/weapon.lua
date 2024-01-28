@@ -3,29 +3,34 @@
 --
 
 GRPC.methods.getWeaponTransform = function(params)
+  GRPC.logWarning("lua call getWeaponTransform(" .. tostring(params.id) .. ")")
+
   local weapon = GRPC.state.tracked_weapons[params.id]
   if weapon == nil then
-    GRPC.state.tracked_weapons[params.id] = nil
     local msg = "weapon " .. tostring(params.id) .. " does not exist"
+    GRPC.logWarning(msg)
     return GRPC.errorNotFound(msg)
   end
 
   if not weapon.isExist then
-    GRPC.state.tracked_weapons[params.id] = nil
     local msg = "weapon object missing isExist " .. tostring(params.id) .. " does not exist"
+    GRPC.logWarning(msg)
     return GRPC.errorNotFound(msg)
   end
 
   if not weapon:isExist() then
-    GRPC.state.tracked_weapons[params.id] = nil
     local msg = "weapon " .. tostring(params.id) .. " does not exist"
+    GRPC.logWarning(msg)
     return GRPC.errorNotFound(msg)
   end
 
-  return GRPC.success({
+  local retval = {
     time = timer.getTime(),
     rawTransform = GRPC.exporters.rawTransform(weapon)
-  })
+  }
+
+  GRPC.logWarning("lua response getWeaponTransform(" .. tostring(params.id) .. "): " .. net.lua2json(retval))
+  return GRPC.success(retval)
 end
 
 

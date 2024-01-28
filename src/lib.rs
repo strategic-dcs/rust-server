@@ -155,14 +155,14 @@ pub fn next(lua: &Lua, (env, callback): (i32, Function)) -> LuaResult<bool> {
                         method,
                         weapon_transform_request_id);
                 } else {
-                    log::debug!(
+                    log::info!(
                         "Sending request `{}`: {}",
                         method,
                         pretty_print_value(params.clone(), 0)?
                     );
                 }
             } else {
-                log::debug!("Sending request `{}`", method,);
+                log::info!("Sending request `{}`", method,);
             }
 
             let result: LuaTable = callback.call((method.as_str(), params))?;
@@ -180,6 +180,8 @@ pub fn next(lua: &Lua, (env, callback): (i32, Function)) -> LuaResult<bool> {
 
             if method == "getWeaponTransform" {
                 log::info!("Receiving: getWeaponTransform(id={})", weapon_transform_request_id);
+            } else {
+                log::info!("Receiving: {})", method);
             }
 
             log::debug!("Receiving: {}", pretty_print_value(res.clone(), 0)?);

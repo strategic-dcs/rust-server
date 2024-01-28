@@ -80,6 +80,8 @@ GRPC.onDcsEvent = function(event)
       return nil
     end
 
+    GRPC.logError("weapon id: " .. event.weapon:tonumber() .. " name: " .. event.weapon:getName() .. " id" .. event.weapon:getID())
+
     -- Due to needing a record of our weapons before we send to GRPC before
     -- requesting future transforms, if we're an S_EVENT_SHOT then we just
     -- add to our table of known weapons
