@@ -254,6 +254,33 @@ if isMissionEnv then
       end
     end
   end
+
+  -- Start our weapon update processing
+  timer.scheduleFunction(function()
+    for weapon_id, weapon in pairs(GRPC.state.tracked_weapons) do
+      local event = {
+        type = "weaponUpdate",
+        weaponId = weapon_id,
+        weapon = nil,
+      }
+
+      local ok, result = pcall(GRPC.exporters.weapon, weapon)
+      if ok == true then event.weapon = result end
+
+      if event.weapon == nil then
+        GRPC.state.tracked_weapons[weapon_id] = nil
+      end
+
+      GRPC.event({
+        time = timer.getTime(),
+        event = event
+      })
+
+    end
+    return timer.getTime() + 0.5
+  end, nil, timer.getTime() + 0.5)
+
+  -- Start listening for events
   world.addEventHandler(eventHandler)
 else -- hook env
   -- execute gRPC requests

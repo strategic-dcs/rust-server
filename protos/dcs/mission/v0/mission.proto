@@ -503,6 +503,14 @@ message StreamEventsResponse {
     dcs.common.v0.Position position = 2;
   }
 
+  message WeaponUpdateEvent {
+    // ID of weapon that we are updating
+    uint32 weapon_id = 1;
+
+    // Optional wepaon, if not set, we no longer exist
+    optional dcs.common.v0.Weapon weapon = 2;
+  }
+
   // The event's mission time.
   double time = 1;
   oneof event {
@@ -558,6 +566,7 @@ message StreamEventsResponse {
     TtsEvent tts = 8200;
     SplashDamageEvent splash_damage = 8201;
     SplashExplosionEvent splash_explosion = 8202;
+    WeaponUpdateEvent weapon_update = 8203;
   }
 }
 
