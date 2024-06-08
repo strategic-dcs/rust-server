@@ -86,6 +86,11 @@ service MissionService {
 message StreamEventsRequest {
 }
 
+message WarehouseUpdate {
+  string ws_type = 1;
+  int32 adjustment = 2;
+}
+
 // The DCS Event information. Contains event information and a timestamp.
 message StreamEventsResponse {
   // Occurs when a unit fires a weapon (but no machine gun- or autocannon-based
@@ -511,6 +516,14 @@ message StreamEventsResponse {
     optional dcs.common.v0.Weapon weapon = 2;
   }
 
+  message WarehouseUpdateEvent {
+    // Name of airbase/FARP
+    string airbase_name = 1;
+
+    // Optional wepaon, if not set, we no longer exist
+    repeated WarehouseUpdate updates = 2;
+  }
+
   // The event's mission time.
   double time = 1;
   oneof event {
@@ -567,6 +580,7 @@ message StreamEventsResponse {
     SplashDamageEvent splash_damage = 8201;
     SplashExplosionEvent splash_explosion = 8202;
     WeaponUpdateEvent weapon_update = 8203;
+    WarehouseUpdateEvent warehouse_update = 8204;
   }
 }
 
