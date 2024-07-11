@@ -62,6 +62,25 @@ local createGroundGroupTemplate = function(groupTemplate)
   local comboTasks = {}
   local groupTaskId = 1
 
+  if groupTemplate.evasionOfArm == true then
+    table.insert(comboTasks, {
+      ["enabled"] = true,
+      ["auto"] = false,
+      ["id"] = "WrappedAction",
+      ["number"] = groupTaskId,
+      ["params"] = {
+        ["action"] = {
+          ["id"] = "Option",
+          ["params"] = {
+            ["name"] = 31,
+            ["value"] = false,
+          }
+        }
+      }
+    })
+    groupTaskId = groupTaskId + 1
+  end
+
   if groupTemplate.immortal == true then
     table.insert(comboTasks, {
       ["enabled"] = true,

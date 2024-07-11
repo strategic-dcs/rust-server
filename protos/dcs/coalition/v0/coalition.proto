@@ -72,6 +72,7 @@ message AddGroupRequest {
     optional bool hidden_on_planner = 16;
     optional uint32 set_frequency = 17;
     optional bool is_ewr = 18;
+    optional bool evasion_of_arm = 19;
   }
   message GroundUnitTemplate {
     string name = 1;
