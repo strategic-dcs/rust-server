@@ -20,6 +20,8 @@ local function exporter(object)
     return GRPC.exporters.scenery(object)
   elseif category == Object.Category.CARGO then
     return GRPC.exporters.static(object)
+  elseif object.getID == nil then
+    return nil
   else
     GRPC.logWarning(
       "Could not determine object category of object with ID: " .. object:getID()
@@ -49,6 +51,8 @@ local function typed_exporter(object)
     grpcTable.scenery = exporter(object)
   elseif category == Object.Category.CARGO then
     grpcTable.static = exporter(object)
+  elseif object.getID == nil then
+    return nil
   else
     GRPC.logWarning(
       "Could not determine object category of object with ID: " .. object:getID()
