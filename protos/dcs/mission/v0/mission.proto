@@ -359,6 +359,14 @@ message StreamEventsResponse {
     string weapon_name = 2;
   }
 
+  // Fired for each weapon jettisonned from an aircraft
+  message WeaponDropEvent {
+    // The object that got spawned.
+    dcs.common.v0.Initiator initiator = 1;
+    // The name of the payload.
+    string weapon_name = 2;
+  }
+
   // Occurs when an aircraft receives an LSO rating after recovering on an
   // aircraft carrier.
   message LandingQualityMarkEvent {
@@ -564,6 +572,7 @@ message StreamEventsResponse {
     // @exclude 38 reserved for S_EVENT_TRIGGER_ZONE
     LandingQualityMarkEvent landing_quality_mark = 39;
     // @exclude 40 reserved for S_EVENT_BDA
+    WeaponDropEvent weapon_drop = 48;
 
     // The following events are additions on top of DCS's own event enum,
     // which is why they start at 8192 to give DCS plenty of space for

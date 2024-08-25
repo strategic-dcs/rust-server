@@ -98,6 +98,31 @@ GRPC.onDcsEvent = function(event)
       },
     }
 
+  elseif event.id == world.event.S_EVENT_WEAPON_DROP then
+
+    -- In some cases, weapon might be nil or already dead so we avoid tracking
+    -- since there is nothing to track
+    if event.weapon == nil or not event.weapon.isExist or not event.weapon:isExist() then
+      return nil
+    end
+
+    -- we also check it has a weapon id; I don't expect this will ever be null,
+    -- but better safe than sorry...
+    local weapon_id = event.weapon:tonumber()
+    if weapon_id == nil then
+      GRPC.logWarning("EVENT_WEAPON_DROP: weapon_id nil")
+      return nil
+    end
+
+    return {
+      time = event.time,
+      event = {
+        type = "weaponDrop",
+        initiator = {initiator = typed_exporter(event.initiator)},
+        weapon = exporter(event.weapon)
+      },
+    }
+
   elseif event.id == world.event.S_EVENT_HIT then
 
     -- Initiator is optional, but if we have an empty map we get an error
