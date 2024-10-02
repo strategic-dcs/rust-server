@@ -240,6 +240,7 @@ message Unit {
   // If we're in the air or not
   bool in_air = 12;
   double fuel = 13;
+  uint32 obj_id = 14;
 }
 
 /**

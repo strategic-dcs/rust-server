@@ -105,6 +105,7 @@ pub mod v0 {
         group: Option<Group>,
         number_in_group: u32,
         raw_transform: Option<RawTransform>,
+        obj_id: u32,
     }
 
     impl From<UnitIntermediate> for Unit {
@@ -118,6 +119,7 @@ pub mod v0 {
                 group,
                 number_in_group,
                 raw_transform,
+                obj_id,
             } = i;
             let transform = Transform::from(raw_transform.unwrap_or_default());
             Unit {
@@ -134,6 +136,7 @@ pub mod v0 {
                 velocity: Some(transform.velocity),
                 group,
                 number_in_group,
+                obj_id,
             }
         }
     }

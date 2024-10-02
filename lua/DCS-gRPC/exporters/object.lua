@@ -33,6 +33,7 @@ GRPC.exporters.unit = function(unit)
 
   return {
     id = tonumber(unit_id),
+    objId = unit.id_,
     name = unit:getName(),
     callsign = unit:getCallsign(),
     coalition = unit:getCoalition() + 1, -- Increment for non zero-indexed gRPC enum
