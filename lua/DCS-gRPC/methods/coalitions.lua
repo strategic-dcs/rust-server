@@ -257,6 +257,12 @@ GRPC.methods.addStaticObject = function(params)
 
   if params.category ~= nil then
     staticTemplate.category = params.category
+
+    -- non cow have dynamicSpawn true
+    if params.category == "Heliports" and string.sub(params.name, 1, 3) ~= "COW" then
+      staticTemplate.dynamicSpawn = true
+      -- staticTemplate.allowHotStart = true
+    end
   end
 
   if params.shapeName ~= nil then
