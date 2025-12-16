@@ -25,6 +25,7 @@ pub mod v0 {
                 player_name: Some(transform.player_name),
                 in_air: transform.in_air,
                 fuel: transform.fuel,
+                cargos_on_board: transform.cargos_on_board,
             }
         }
     }

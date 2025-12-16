@@ -31,6 +31,16 @@ GRPC.exporters.unit = function(unit)
     group = GRPC.exporters.group(group)
   end
 
+  local cargos_on_board = {}
+  if unit.getCargosOnBoard ~= nil then
+    cargo_on_board = unit:getCargosOnBoard()
+    if cargo_on_board ~= nil then
+      for k, v in pairs(cargo_on_board) do
+        table.insert(cargos_on_board, v:getName())
+      end
+    end
+  end
+
   return {
     id = tonumber(unit_id),
     objId = unit.id_,
@@ -44,6 +54,7 @@ GRPC.exporters.unit = function(unit)
     inAir = unit:inAir(),
     fuel = unit:getFuel(),
     rawTransform = GRPC.exporters.rawTransform(unit),
+    cargosOnBoard = cargos_on_board,
   }
 end
 

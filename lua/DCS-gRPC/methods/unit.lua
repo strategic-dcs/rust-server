@@ -66,10 +66,21 @@ GRPC.methods.getUnitTransform = function(params)
     return GRPC.errorNotFound("unit does not exist")
   end
 
+  local cargos_on_board = {}
+  if unit.getCargosOnBoard ~= nil then
+    cargo_on_board = unit:getCargosOnBoard()
+    if cargo_on_board ~= nil then
+      for k, v in pairs(cargo_on_board) do
+        table.insert(cargos_on_board, v:getName())
+      end
+    end
+  end
+
   local xform = GRPC.exporters.rawTransform(unit)
   xform.playerName = unit:getPlayerName()
   xform.inAir = unit:inAir()
   xform.fuel = unit:getFuel()
+  xform.cargosOnBoard = cargos_on_board
 
   return GRPC.success({
     time = timer.getTime(),

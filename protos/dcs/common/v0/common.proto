@@ -241,6 +241,7 @@ message Unit {
   bool in_air = 12;
   double fuel = 13;
   uint32 obj_id = 14;
+  repeated string cargos_on_board = 15;
 }
 
 /**

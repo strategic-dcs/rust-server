@@ -15,6 +15,7 @@ pub mod v0 {
         pub player_name: Option<String>,
         pub in_air: Option<bool>,
         pub fuel: Option<f64>,
+        pub cargos_on_board: Option<Vec<String>>,
     }
 
     pub(crate) struct Transform {
@@ -24,6 +25,7 @@ pub mod v0 {
         pub player_name: String,
         pub in_air: bool,
         pub fuel: f64,
+        pub cargos_on_board: Vec<String>,
     }
 
     impl From<RawTransform> for Transform {
@@ -38,6 +40,7 @@ pub mod v0 {
                 player_name,
                 in_air,
                 fuel,
+                cargos_on_board,
             } = raw;
             let position = position.unwrap_or_default();
             let position_north = position_north.unwrap_or_default();
@@ -48,6 +51,7 @@ pub mod v0 {
             let player_name = player_name.unwrap_or_default();
             let in_air = in_air.unwrap_or_default();
             let fuel = fuel.unwrap_or_default();
+            let cargos_on_board = cargos_on_board.unwrap_or_default();
 
             let projection_error =
                 (position_north.z - position.u).atan2(position_north.x - position.v);
@@ -90,6 +94,7 @@ pub mod v0 {
                 player_name,
                 in_air,
                 fuel,
+                cargos_on_board,
             }
         }
     }
@@ -131,6 +136,7 @@ pub mod v0 {
                 player_name: Some(transform.player_name),
                 in_air: transform.in_air,
                 fuel: transform.fuel,
+                cargos_on_board: transform.cargos_on_board,
                 position: Some(transform.position),
                 orientation: Some(transform.orientation),
                 velocity: Some(transform.velocity),

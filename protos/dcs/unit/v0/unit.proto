@@ -70,6 +70,7 @@ message GetTransformResponse {
   optional string player_name = 5;
   bool in_air = 6;
   double fuel = 7;
+  repeated string cargos_on_board = 8;
 }
 
 message GetStaticTransformRequest {
