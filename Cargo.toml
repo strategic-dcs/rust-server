@@ -52,7 +52,7 @@ srs = { package = "dcs-grpc-srs", path = "./srs" }
 stubs = { package = "dcs-grpc-stubs", path = "./stubs", features = ["server"] }
 thiserror.workspace = true
 tts = { package = "dcs-grpc-tts", path = "./tts" }
-time = { version = "0.3", features = ["formatting", "parsing"] }
+time = { version = "0.3.35", features = ["formatting", "parsing"] }
 tokio.workspace = true
 tokio-stream.workspace = true
 tonic.workspace = true
