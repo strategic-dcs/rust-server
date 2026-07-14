@@ -183,6 +183,7 @@ message AddStaticObjectRequest {
 
   // If the unit is hidden
   optional bool hidden = 13;
+  optional bool can_cargo = 14;
 }
 
 message AddStaticObjectResponse {

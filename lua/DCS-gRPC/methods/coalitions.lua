@@ -275,8 +275,17 @@ GRPC.methods.addStaticObject = function(params)
   end
 
   if params.cargoMass ~= nil and params.cargoMass > 0 then
-    staticTemplate.canCargo = true
     staticTemplate.mass = params.cargoMass
+
+	-- Crate can be cargo only if it has mass.
+	-- canCargo flag both defines if crate can be lifted AND loaded inside
+	-- When it's false we basically force CTLD
+	-- Useful when we want to disable slinging/loading in C-130 or CH-47
+	if params.canCargo ~= nil then
+		staticTemplate.canCargo = params.canCargo
+	else
+		staticTemplate.canCargo = true
+	end
   end
 
   coalition.addStaticObject(params.country - 1, staticTemplate)
