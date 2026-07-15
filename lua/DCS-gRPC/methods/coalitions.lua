@@ -261,7 +261,7 @@ GRPC.methods.addStaticObject = function(params)
 	-- non cow have dynamicSpawn true
 	if params.category == "Heliports" and string.sub(params.name, 1, 3) ~= "COW" then
 	  staticTemplate.dynamicSpawn = true
-	  -- staticTemplate.allowHotStart = true
+	  staticTemplate.allowHotStart = true
 	end
  
   end
